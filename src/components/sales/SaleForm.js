@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
+import { useData } from '../../contexts/DataContext';
+import { formatPrice } from '../../utils/formatters';
 
 const SaleForm = ({ sale, onSubmit, onCancel }) => {
+  const { cars, customers } = useData();
   const [formData, setFormData] = useState({
     customer: '',
     car: '',
@@ -9,34 +12,54 @@ const SaleForm = ({ sale, onSubmit, onCancel }) => {
     ...sale
   });
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    onSubmit(formData);
-  };
+  // Lọc xe còn hàng
+  const availableCars = cars.filter(car => car.quantity > 0);
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={(e) => {
+      e.preventDefault();
+      onSubmit(formData);
+    }}>
       <div className="space-y-4">
         <div>
           <label className="block text-sm font-medium text-gray-700">Khách Hàng</label>
-          <input
-            type="text"
+          <select
             value={formData.customer}
             onChange={(e) => setFormData({...formData, customer: e.target.value})}
             className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2"
             required
-          />
+          >
+            <option value="">Chọn khách hàng</option>
+            {customers.map(customer => (
+              <option key={customer.id} value={customer.name}>
+                {customer.name}
+              </option>
+            ))}
+          </select>
         </div>
 
         <div>
           <label className="block text-sm font-medium text-gray-700">Xe</label>
-          <input
-            type="text"
+          <select
             value={formData.car}
-            onChange={(e) => setFormData({...formData, car: e.target.value})}
+            onChange={(e) => {
+              const selectedCar = cars.find(car => car.name === e.target.value);
+              setFormData({
+                ...formData, 
+                car: e.target.value,
+                value: selectedCar ? selectedCar.price : ''
+              });
+            }}
             className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2"
             required
-          />
+          >
+            <option value="">Chọn xe</option>
+            {availableCars.map(car => (
+              <option key={car.id} value={car.name}>
+                {car.name} - {formatPrice(car.price)}
+              </option>
+            ))}
+          </select>
         </div>
 
         <div>

@@ -28,7 +28,13 @@ const Sidebar = () => {
   return (
     <div className="w-64 bg-blue-900 text-white min-h-screen flex flex-col">
       <div className="p-4 flex items-center justify-between border-b border-blue-800">
-        <h1 className="text-xl font-semibold">Quản Lý Xe</h1>
+        <div className="flex items-center space-x-3">
+          <UserCircle className="w-8 h-8" />
+          <div>
+            <p className="font-medium">Nguyễn Văn A</p>
+            <p className="text-sm text-blue-300">Admin</p>
+          </div>
+        </div>
         <ChevronLeft className="w-6 h-6 cursor-pointer hover:text-blue-300" />
       </div>
       

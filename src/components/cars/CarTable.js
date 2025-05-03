@@ -1,5 +1,6 @@
 import React from 'react';
 import { Edit2, Trash2 } from 'lucide-react';
+import { formatPrice } from '../../utils/formatters';
 
 const CarTable = ({ cars, onEdit, onDelete }) => {
   return (
@@ -31,7 +32,11 @@ const CarTable = ({ cars, onEdit, onDelete }) => {
           {cars.map((car) => (
             <tr key={car.id}>
               <td className="px-6 py-4 whitespace-nowrap">
-                <img src={car.image} alt={car.name} className="h-16 w-24 object-cover rounded" />
+                <img 
+                  src={car.image} 
+                  alt={car.name} 
+                  className="h-16 w-24 object-cover rounded"
+                />
               </td>
               <td className="px-6 py-4 whitespace-nowrap">
                 <div className="text-sm font-medium text-gray-900">{car.name}</div>
@@ -40,14 +45,10 @@ const CarTable = ({ cars, onEdit, onDelete }) => {
                 {car.brand}
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                {car.price.toLocaleString()}đ
+                {formatPrice(car.price)}
               </td>
-              <td className="px-6 py-4 whitespace-nowrap">
-                <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                  car.quantity > 0 ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
-                }`}>
-                  {car.quantity > 0 ? 'Còn Hàng' : 'Hết Hàng'}
-                </span>
+              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                {car.quantity}
               </td>
               <td className="px-6 py-4 whitespace-nowrap">
                 <div className="flex items-center justify-center space-x-2">

@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 const EmployeeForm = ({ employee, onSubmit, onCancel }) => {
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    role: 'Bán Hàng',
-    ...employee
+    name: employee?.name || '',
+    email: employee?.email || '',
+    phone: employee?.phone || '',
+    role: employee?.role || 'Bán Hàng'
   });
 
   const handleSubmit = (e) => {
@@ -27,7 +26,7 @@ const EmployeeForm = ({ employee, onSubmit, onCancel }) => {
             required
           />
         </div>
-        
+
         <div>
           <label className="block text-sm font-medium text-gray-700">Email</label>
           <input

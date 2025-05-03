@@ -1,65 +1,65 @@
 import React, { useState } from 'react';
 import { Plus } from 'lucide-react';
+import { useData } from '../../contexts/DataContext';
 import Modal from '../shared/Modal';
 import CarForm from './CarForm';
 import DeleteConfirmation from '../shared/DeleteConfirmation';
-import CarFilter from './CarFilter';
 import CarTable from './CarTable';
-import { useCars } from '../../hooks/useCars';
+import CarFilter from './CarFilter';
 
 const Cars = () => {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [selectedCar, setSelectedCar] = useState(null);
-  const { 
-    cars,
-    searchTerm,
-    setSearchTerm,
-    selectedBrand,
-    setSelectedBrand,
-    selectedStatus,
-    setSelectedStatus,
-    filteredCars
-  } = useCars();
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedBrand, setSelectedBrand] = useState('Tất Cả Hãng Xe');
+  const { cars, addCar, updateCar, deleteCar } = useData();
+
+  const filteredCars = cars.filter(car => {
+    const matchesSearch = car.name.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesBrand = selectedBrand === 'Tất Cả Hãng Xe' || car.brand === selectedBrand;
+    return matchesSearch && matchesBrand;
+  });
 
   const handleAdd = (formData) => {
-    // Implement add logic here
+    addCar(formData);
     setIsAddModalOpen(false);
   };
 
   const handleEdit = (formData) => {
-    // Implement edit logic here
+    updateCar({ ...selectedCar, ...formData });
     setIsEditModalOpen(false);
+    setSelectedCar(null);
   };
 
   const handleDelete = () => {
-    // Implement delete logic here
+    deleteCar(selectedCar.id);
     setIsDeleteModalOpen(false);
+    setSelectedCar(null);
   };
 
   return (
-    <div className="p-6">
-      <h1 className="text-2xl font-semibold mb-6">Quản Lý Xe</h1>
-      
+    <div className="p-4">
       <CarFilter 
         searchTerm={searchTerm}
         onSearchChange={setSearchTerm}
         selectedBrand={selectedBrand}
         onBrandChange={setSelectedBrand}
-        selectedStatus={selectedStatus}
-        onStatusChange={setSelectedStatus}
+        onAddClick={() => setIsAddModalOpen(true)}
       />
-      
-      <div className="mt-6">
-        <button 
-          className="bg-blue-500 text-white px-4 py-2 rounded"
-          onClick={() => setIsAddModalOpen(true)}
-        >
-          <Plus className="inline-block mr-2" />
-          Thêm Xe
-        </button>
-      </div>
+
+      <CarTable 
+        cars={filteredCars}
+        onEdit={(car) => {
+          setSelectedCar(car);
+          setIsEditModalOpen(true);
+        }}
+        onDelete={(car) => {
+          setSelectedCar(car);
+          setIsDeleteModalOpen(true);
+        }}
+      />
 
       <Modal 
         isOpen={isAddModalOpen} 
@@ -90,25 +90,11 @@ const Cars = () => {
         title="Xác Nhận Xóa"
       >
         <DeleteConfirmation 
-          message="Bạn có chắc chắn muốn xóa xe này?"
+          message={`Bạn có chắc chắn muốn xóa xe ${selectedCar?.name}?`}
           onConfirm={handleDelete}
           onCancel={() => setIsDeleteModalOpen(false)}
         />
       </Modal>
-
-      <div className="mt-6">
-        <CarTable 
-          cars={filteredCars}
-          onEdit={(car) => {
-            setSelectedCar(car);
-            setIsEditModalOpen(true);
-          }}
-          onDelete={(car) => {
-            setSelectedCar(car);
-            setIsDeleteModalOpen(true);
-          }}
-        />
-      </div>
     </div>
   );
 };

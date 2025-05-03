@@ -38,7 +38,7 @@ const EmployeeTable = ({ employees, onEdit, onDelete }) => {
             <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
               Trạng Thái
             </th>
-            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <th scope="col" className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
               Thao Tác
             </th>
           </tr>
@@ -68,8 +68,8 @@ const EmployeeTable = ({ employees, onEdit, onDelete }) => {
                   {employee.status}
                 </span>
               </td>
-              <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                <div className="flex items-center justify-end space-x-2">
+              <td className="px-6 py-4 whitespace-nowrap">
+                <div className="flex items-center justify-center space-x-2">
                   <button 
                     onClick={() => onEdit(employee)}
                     className="text-blue-600 hover:text-blue-800"
