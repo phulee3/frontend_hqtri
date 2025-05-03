@@ -1,24 +1,27 @@
-import logo from './logo.svg';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import './App.css';
+import CarManagementLayout from './components/layout/CarManagementLayout';
+import Dashboard from './components/dashboard/Dashboard';
+import Cars from './components/cars/Cars';
+import Customers from './components/customers/Customers';
+import Sales from './components/sales/Sales';
+import Employees from './components/employees/Employees';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<CarManagementLayout />}>
+          <Route index element={<Navigate to="/dashboard" replace />} />
+          <Route path="dashboard" element={<Dashboard />} />
+          <Route path="cars" element={<Cars />} />
+          <Route path="customers" element={<Customers />} />
+          <Route path="sales" element={<Sales />} />
+          <Route path="employees" element={<Employees />} />
+        </Route>
+      </Routes>
+    </Router>
   );
 }
 
