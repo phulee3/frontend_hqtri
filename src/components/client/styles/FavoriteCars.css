@@ -1,0 +1,82 @@
+.favorite-cars {
+    padding: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.favorite-header {
+    margin-bottom: 2rem;
+}
+
+.favorite-header h1 {
+    color: #23408e;
+    font-size: 2rem;
+    font-weight: 700;
+    margin: 0 0 0.5rem 0;
+}
+
+.favorite-count {
+    color: #666;
+    font-size: 1.1rem;
+    margin: 0;
+}
+
+.favorite-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.no-favorites {
+    text-align: center;
+    padding: 4rem 2rem;
+    background: #f8f9fa;
+    border-radius: 12px;
+    margin-top: 2rem;
+}
+
+.no-favorites svg {
+    margin-bottom: 1.5rem;
+}
+
+.no-favorites h2 {
+    color: #23408e;
+    font-size: 1.5rem;
+    margin: 0 0 1rem 0;
+}
+
+.no-favorites p {
+    color: #666;
+    margin: 0 0 2rem 0;
+}
+
+.browse-cars {
+    background-color: #23408e;
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.browse-cars:hover {
+    background-color: #1a2e66;
+}
+
+@media (max-width: 768px) {
+    .favorite-cars {
+        padding: 1rem;
+    }
+
+    .favorite-header h1 {
+        font-size: 1.5rem;
+    }
+
+    .favorite-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+}

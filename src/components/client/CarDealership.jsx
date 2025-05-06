@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Header from './Header';
 import CarList from './CarList';
 import FilterSection from './FilterSection';
+import { FavoriteProvider } from '../../contexts/FavoriteContext';
 import './styles/CarDealership.css';
 
 const CarDealership = () => {
@@ -23,7 +24,9 @@ const CarDealership = () => {
                     onFilterChange={handleFilterChange}
                     filters={filters}
                 />
-                <CarList filters={filters} />
+                <FavoriteProvider>
+                    <CarList filters={filters} />
+                </FavoriteProvider>
             </div>
         </div>
     );
